@@ -5,17 +5,20 @@ crc2 = [1 1 1];
 crc4 = [1 1 0 1];
 crc6 = [1 1 0 1 1 1 1];
 crc8 = [1 0 0 1 1 1 1 0 1 0 1 1 0 0 1 0 1];
-
+crc1 = [1 1];
     Pe_decode1;
     P_ed1;
-    Pe_decode2 ;
+    Pe_decode2;
     P_ed2 ;
-    Pe_decode3 ;
+    Pe_decode3;
     P_ed3 ;
-   
-   
-M = [2, 4, 6, 8]; %длина последовательности 
-for ih = 1 : 4
+    Pe_decode4;
+    P_ed4 ;
+    Pe_decode5;
+    P_ed5;
+M = [2, 4, 6, 8, 1]; %длина последовательности 
+
+for ih = 1 : 5
     crc;
     m = 0;
 if ih == 1
@@ -40,7 +43,7 @@ if ih == 5
 end
 
 r = length(crc)-1; %2^r колво элементов поля
-n = 10000; %количество пакетов
+n = 1000; %количество пакетов
 %CNR при которых будем делать проверку от -inf до 1 для Дец
 snr_arr = -30:5:10;
 snr_theor_arr = -30:10;
@@ -134,16 +137,18 @@ if ih == 4
     Pe_decode4 =  Pe_decode;
     P_ed4 = P_ed;
 end
-
+if ih == 5
+    Pe_decode5 =  Pe_decode;
+    P_ed5 = P_ed;
+end
 
 
 end
 %строим графики 
-figure(1);
-semilogy(snr_theor_arr, Pb_theor, 'c', snr_arr, Pb, 'ko');
+
 figure(2);
 
-semilogy(snr_arr, Pe_decode1, 'bo', snr_theor_arr, P_ed1, snr_arr, Pe_decode2, 'bo', snr_theor_arr, P_ed2, snr_arr, Pe_decode3, 'bo', snr_theor_arr, P_ed3, snr_arr, Pe_decode4, 'bo', snr_theor_arr, P_ed4);
+semilogy(snr_arr, Pe_decode1, "bo", snr_theor_arr, P_ed1, snr_arr, Pe_decode2, "bo", snr_theor_arr, P_ed2, snr_arr, Pe_decode3, "bo", snr_theor_arr, P_ed3, snr_arr, Pe_decode4, "bo", snr_theor_arr, P_ed4, snr_arr, Pe_decode5, "bo", snr_theor_arr, P_ed5);
 
 
 
